@@ -1,10 +1,9 @@
-import Alert from 'react-bootstrap/Alert';
+import { Alert } from 'antd';
 
 export const showSucessMessage=success=>{
-    return (<Alert data-testid="sucessMsg" variant='primary'>{success}</Alert>);
-
+    return (<Alert data-testid='sucessMsg' message={success} type='success' showIcon closable />);
 }
 
 export const showErrorMessage=error=>{
-    return (<Alert data-testid="errorMsg" variant='danger'>{error}</Alert>);
+    return (<Alert data-testid='errorMsg' message={error} type='error' showIcon closable/>);
 }

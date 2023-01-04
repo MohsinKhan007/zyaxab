@@ -1,11 +1,11 @@
 
 
 import './App.css';
-import Layout from './Components/Layout';
+import FormLayout from './Components/Layout';
 
 function App() {
   return (
-    <Layout/>
+    <FormLayout/>
   );
 }
 

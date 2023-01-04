@@ -3,7 +3,7 @@ const cookies=new Cookies();
 export const setCookie=(accessToken,refreshToken)=>{
 // add the time thingyy into the application
     try{
-        console.log("SetCookie");
+        // console.log("SetCookie");
         const expiration=new Date();
         expiration.setTime(expiration.getTime()+(10000))
         cookies.set('access_token',accessToken,{path:'/',expiration})
@@ -46,7 +46,7 @@ export const isAuth=()=>{
 }
 
 export const logout=()=>{
-	console.log("Logout service");
+	// console.log("Logout service");
     cookies.remove('access_token');
     cookies.remove('refresh_token');
 }

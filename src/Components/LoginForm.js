@@ -1,32 +1,31 @@
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
+// import Button from 'react-bootstrap/Button';
+// import Form from 'react-bootstrap/Form';
+import React from 'react';
 import { useState } from 'react';
-
+import { Button, Form, Input } from "antd"
 import axios from '../utils/axios';
 import { setCookie,isAuth,logout } from '../utils/AuthenticationService';
 import { showSucessMessage,showErrorMessage } from '../utils/alerts';
-
+import Logout from './Logout';
+// add custom validations
 function LoginForm() {
     const [formValue, setFormValue] = useState({
         email: "",
         password: "",
         success: "",
-        error: "",
-        isAuth: false,
+        error: ""
     })
-
+   
     const handleSubmit = async (e) => {
+        console.log("handle submit");
+        if(!formValue.email ||!formValue.password){
+                
+            setFormValue({...formValue,error:'Email or Password cannot be empty'})
+            return;
+        }
         try {
-            e.preventDefault()
 
-            if (!formValue.email || !formValue.password) {
-                setFormValue({
-                    ...formValue,
-                    error: "Email or Password cannot be empty",
-                })
-            } else {
-                // console.log("idr aya hai")
-
+        
                 const response = await axios({
                     method: "post",
                     url: "/access",
@@ -40,28 +39,23 @@ function LoginForm() {
                         success: "Login Sucessful",
                         error: "",
                         isAuth: true,
-                    })
+                    }) 
                     // console.log(response)
                     setCookie(
                         response.data.accessToken,
                         response.data.refreshToken
                     )
                 }
-            }
         } catch (error) {
             setFormValue({
                 ...formValue,
                 error: error.response.data.error,
                 success: "",
             })
-            // console.log(error.response.data.error, " Error checking")
-            // console.log(error)
         }
     }
 
-    const handleClick = (e) => {
-        // console.log([e.target.name], " name")
-        // console.log(e.target.value, " sss")
+    const handleChange = (e) => {
         setFormValue({ ...formValue, [e.target.name]: e.target.value })
     }
 
@@ -77,41 +71,32 @@ function LoginForm() {
             {error && showErrorMessage(error)}
 
             {isAuth() ? (
-              // Could add an component for the logged in page
-                <button data-testid="logout" onClick={handleLogout}>Logout</button>
+                <Logout handleLogout={handleLogout}/>
             ) : (
-                <form onSubmit={handleSubmit}>
-                    <Form.Group className="mb-3" controlId="formBasicEmail">
-                        <Form.Label>Email address:</Form.Label>
-                        <Form.Control
-                            type="email"
-                            onChange={handleClick}
-                            data-testid="email"
-                            value={email}
-                            name="email"
-                            placeholder="Enter email"
-                        />
-                    </Form.Group>
-
-                    <Form.Group
-                        className="mb-3"
-                        controlId="formBasicPassword"
+                <Form size='middle' onFinish={handleSubmit}
+               
+                >
+                    <Form.Item
+                        label="Email"
+                        name="email"
+                        style={{marginLeft:'6%'}}
                     >
-                        <Form.Label>Password:</Form.Label>
-                        <Form.Control
-                            onChange={handleClick}
-                            data-testid="password"
-                            value={password}
-                            name="password"
-                            type="password"
-                            placeholder="Password"
-                        />
-                    </Form.Group>
+                        <Input name="email" data-testid="email"  value={email} onChange={handleChange} />
+                    </Form.Item>
 
-                    <Button data-testid="submit" variant="primary" type="submit">
-                        Log in
+                    <Form.Item
+                   
+                        label="Password"
+                        name="password"
+                        
+                    >
+                        <Input.Password name="password"  data-testid="password"  value={password} onChange={handleChange} />
+                    </Form.Item>
+
+                    <Button  style={{marginLeft:'20%'}} type="primary" data-testid='submit' htmlType="submit">
+                        Submit
                     </Button>
-                </form>
+                </Form>
             )}
         </>
     )
