@@ -1,0 +1,11 @@
+.main{
+border-radius: 5px;
+background-color: #EF5350;
+margin-top: 30px;
+padding-top: 20px;
+padding-bottom: 20px;
+padding-left: 15px;
+padding-right: 15px;
+margin-left: calc((100% - 580px) / 2);
+width: 550px
+};
