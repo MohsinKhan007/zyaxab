@@ -3,7 +3,7 @@ import LoginForm from "../Components/LoginForm"
 
 import {render,screen,cleanup,waitFor, fireEvent } from '@testing-library/react';
 import { isAuth, getCookies, setCookie, logout } from "../utils/AuthenticationService"
-
+import ReactTestUtils, { act } from 'react-dom/test-utils';
 global.matchMedia = global.matchMedia || function () {
     return {
       matches: false,
@@ -67,22 +67,23 @@ expect(password).toHaveTextContent('');
 })
 
 test("Form displays validation message if the email or password is blank ", () => {
-    const { submitButton, email, password } = setup()
-
-    // testing the field are present in the Component
-    expect(email).toBeInTheDocument()
-    expect(password).toBeInTheDocument()
-    // testing the field are empty initially
-    expect(email).toHaveTextContent('')
-    expect(password).toHaveTextContent('')
-
-    fireEvent.change(email,{target:{value:''}});
-    fireEvent.change(password,{target:{value:''}});
     
-    fireEvent(submitButton,new MouseEvent('click'));
-    
-    expect(screen.getByTestId('errorMsg')).toBeInTheDocument();
+        const { submitButton, email, password } = setup()
+        console.log(submitButton," submitButton");
+        // testing the field are present in the Component
+        expect(email).toBeInTheDocument()
+        expect(password).toBeInTheDocument()
+        // testing the field are empty initially
+        expect(email).toHaveTextContent('')
+        expect(password).toHaveTextContent('')
+        act(()=>{
+        submitButton.dispatchEvent(new MouseEvent('click', {bubbles: true}));
+        expect(screen.getByTestId('errorMsg')).toBeInTheDocument();
 
+    })
+
+    
+   
 })
 
 // test(("The form displays an error message if the login fails"),async()=>{

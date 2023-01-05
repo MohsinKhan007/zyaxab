@@ -17,15 +17,13 @@ function LoginForm() {
     })
    
     const handleSubmit = async (e) => {
-        console.log("handle submit");
-        if(!formValue.email ||!formValue.password){
-                
-            setFormValue({...formValue,error:'Email or Password cannot be empty'})
-            return;
-        }
         try {
+        if(!formValue.email ||!formValue.password){   
+            setFormValue({...formValue,error:'Email or Password cannot be empty'})
+        }
+        console.log("handle submit");
 
-        
+            
                 const response = await axios({
                     method: "post",
                     url: "/access",
@@ -73,7 +71,7 @@ function LoginForm() {
             {isAuth() ? (
                 <Logout handleLogout={handleLogout}/>
             ) : (
-                <Form size='middle' onFinish={handleSubmit}
+                <Form size='middle' 
                
                 >
                     <Form.Item
@@ -93,7 +91,7 @@ function LoginForm() {
                         <Input.Password name="password"  data-testid="password"  value={password} onChange={handleChange} />
                     </Form.Item>
 
-                    <Button  style={{marginLeft:'20%'}} type="primary" data-testid='submit' htmlType="submit">
+                    <Button onClick={handleSubmit}  style={{marginLeft:'20%'}} type="primary" data-testid='submit' htmlType="submit">
                         Submit
                     </Button>
                 </Form>
