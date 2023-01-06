@@ -1,70 +1,37 @@
-# Getting Started with Create React App
+# Zyax AB Frontend Programming Challenge
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is the description of the project made by Author (Muhammad Mohsin) by attempting the coding test of Zyax AB
 
-## Available Scripts
+## How to run:
 
-In the project directory, you can run:
+- Download the git repo by git clone or downloading it as a zip
+- Extract the files and go it the directory
+- Run command ` **npm start** `
+- The project will run on port 3000
 
-### `npm start`
+### Test cases:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- Run command ` **npm run test** `
+- The written test cases will start running
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Features:
 
-### `npm test`
+- Ant design is used in the project. As I already familiar with front-end framework: - react-bootstrap and MUI, I wanted to try the layout of Ant design.
+- It has a Login Form Component which contains the logic of the application
+- A Layout component which wraps the Layout component for layout styling
+- A Login Component to the screen when user logs into the system
+- It has utility folder which handles the loading, alert, API endpoint and cookies and local storage features.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Working Description:
 
-### `npm run build`
+### Parts that was easy:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. **The Layout of the project** : As I worked as a Full-Stack Developer, developing the layout styles was easy
+2. **Form Validations** : experience was easy (did through alert Message generation as it was open to do and button disable didn't feel good for users)
+3. **Cookie session:** Did handle many session of cookies
+4. **State management:** Experience with React
+5. **Test cases of the project:** Worked in TDD in 2 modules in last company
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Parts that was difficult:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+1. **Write Test of Logout for deleting the cookies** : I have developed the test case which fires the function that deletes the cookies but it is not updated in our application. I intended to complete it by testing if the Login Form component is re-rendered The test case is now removed.

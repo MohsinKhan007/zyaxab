@@ -14,7 +14,7 @@ const FormLayout=()=>{
             
             <Row jusify="center" align="middle">
            
-                <Col span={7}/>
+                <Col span={8}/>
                 <Col span={8} > 
                  <LoginForm />
                 </Col>

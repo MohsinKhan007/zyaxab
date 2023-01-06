@@ -2,7 +2,7 @@
 import LoginForm from "../Components/LoginForm"
 
 import {render,screen,cleanup,waitFor, fireEvent } from '@testing-library/react';
-import { isAuth, getCookie, setCookie, logout } from "../utils/AuthenticationService"
+import { isAuth, logout } from "../utils/AuthenticationService"
 import  { act } from 'react-dom/test-utils';
 
 
@@ -52,9 +52,9 @@ test("Form displays validation message if the email or password is blank ", asyn
         fireEvent(submitButton, new MouseEvent("click"))
     })
 
-    expect(screen.getByTestId("errorMsg")).toBeInTheDocument()
-    expect(screen.getByTestId("errorMsg")).toHaveTextContent(
-        "Email or Password cannot be empty"
+    expect(screen.getByTestId("alertMsg")).toBeInTheDocument()
+    expect(screen.getByTestId("alertMsg")).toHaveTextContent(
+        "Email,Password cannot be empty or invalid"
     )
 })
 
@@ -75,8 +75,8 @@ test(("The form displays an error message if the login fails"),async()=>{
     fireEvent(submitButton,new MouseEvent('click'));
 
     await waitFor(()=>{
-        expect(screen.getByTestId("errorMsg")).toBeInTheDocument()
-        expect(screen.getByTestId("errorMsg")).toHaveTextContent('No access')
+        expect(screen.getByTestId("alertMsg")).toBeInTheDocument()
+        expect(screen.getByTestId("alertMsg")).toHaveTextContent('No access')
     },{timeout:5000,onTimeout:(error)=>{
         console.log(error);
     }});
@@ -98,8 +98,8 @@ test('The form stores the access token in a cookie or local storage if the login
     fireEvent(submitButton,new MouseEvent('click'))
 
     await waitFor(()=>{
-        expect(screen.getByTestId("sucessMsg")).toBeInTheDocument()
-        expect(screen.getByTestId("sucessMsg")).toHaveTextContent('Login Sucessful');
+        expect(screen.getByTestId("alertMsg")).toBeInTheDocument()
+        expect(screen.getByTestId("alertMsg")).toHaveTextContent('Login Sucessful');
         expect(isAuth()).toBe(true);
     });
 },2000)

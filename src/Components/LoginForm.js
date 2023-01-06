@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Button, Form, Input } from "antd"
 import axios from '../utils/axios';
 import { setCookie,isAuth,logout } from '../utils/AuthenticationService';
-import { showSucessMessage,showErrorMessage } from '../utils/alerts';
+import { showMessage } from '../utils/alerts';
 import Loading from '../utils/Loading';
 import Logout from './Logout';
 
@@ -22,21 +22,16 @@ function LoginForm() {
         try {
             e.preventDefault();
             let {email,password}=formValue;
+
+            if(!email || !password || !mailformat.test(email)){
+                setFormValue({...formValue,error:'Email,Password cannot be empty or invalid'})
+                return;
+            }
+
             setFormValue({...formValue,isLoading:true})
 
-        if(!email ||!password ){  
-            console.log("Error"); 
-            setFormValue({...formValue,error:'Email or Password cannot be empty',success:'',isLoading:false})
-            return;
-        }
 
-        if(!email.match(mailformat)){
-            setFormValue({...formValue,error:' Please enter a Valid Email',success:'',isLoading:false})
-            return;
-        }
-
-        else{
-        console.log("handle submit");
+        
             const response = await axios({
                 method: "post",
                 url: "/access",
@@ -49,19 +44,20 @@ function LoginForm() {
                     password: "",
                     success: "Login Sucessful",
                     error: "",
-                    isLoading:false
+                    isLoading: false,
                 })
-                    // console.log(response)
-            setCookie(
-                response.data.accessToken,
-                response.data.refreshToken
-            )}
-        }} catch (error) {
+
+                setCookie(
+                    response.data.accessToken,
+                    response.data.refreshToken
+                )
+            }
+        } catch (error) {
             setFormValue({
                 ...formValue,
                 error: error.response.data.error,
                 success: "",
-                isLoading:false
+                isLoading: false,
             })
         }
     }
@@ -78,8 +74,8 @@ function LoginForm() {
     let { email, password, success, error,isLoading } = formValue
     return (
         <>
-            {success && showSucessMessage(success)}
-            {error && showErrorMessage(error)}
+            {success && showMessage(success,'success')}
+            {error && showMessage(error,'error')}
             {!isLoading ? (
                 isAuth() ? (
                     <Logout handleLogout={handleLogout} />
