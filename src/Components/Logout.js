@@ -10,9 +10,9 @@ const { Title } = Typography;
      }
 
      return (
-         <div style={{margin:'10px'}}>
-             <Title level={1}>Logged in Page</Title>
-             <Button onClick={LogoutUser}> Logout </Button>
+         <div className='logout-main-div'>
+             <Title level={1}>Log in Page</Title>
+             <Button data-testid="logout" onClick={LogoutUser}> Logout </Button>
          </div>
      )
  }

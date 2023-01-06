@@ -1,6 +1,3 @@
-
-
-import './App.css';
 import FormLayout from './Components/Layout';
 
 function App() {

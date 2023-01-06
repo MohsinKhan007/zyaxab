@@ -1,9 +1,8 @@
 import Cookies from 'universal-cookie'
 const cookies=new Cookies();
 export const setCookie=(accessToken,refreshToken)=>{
-// add the time thingyy into the application
+
     try{
-        // console.log("SetCookie");
         const expiration=new Date();
         expiration.setTime(expiration.getTime()+(10000))
         cookies.set('access_token',accessToken,{path:'/',expiration})
@@ -15,38 +14,54 @@ export const setCookie=(accessToken,refreshToken)=>{
         }
 
 }
-// add these functions
-export const setLocalStorage=(accessToken,refreshToken)=>{
 
+export const setLocalStorage=(accessToken,refreshToken)=>{
+    try{
     localStorage.setItem('access_token',accessToken);
     localStorage.setItem('refresh_token',refreshToken)
+    }catch(e){
+        console.log(e);
+    }
     
 }
 
 export const getLocalStorage=()=>{
-
-    return [
-        localStorage.getItem("access_token"),
-        localStorage.getItem("refresh_token"),
-    ]
+    try{
+        return [
+            localStorage.getItem("access_token"),
+            localStorage.getItem("refresh_token"),
+        ]
+    }catch(e){
+        console.log(e);
+    }
 
 }
 
 export const getCookie=()=>{
-
-    return [cookies.get('access_token'), cookies.get('refresh_token')]
-
+    try{
+        return [cookies.get('access_token'), cookies.get('refresh_token')]
+    }catch(e){
+        console.log(e);
+    }
 }
 
 export const isAuth=()=>{
-	
-	 let value=cookies.get('access_token') ||cookies.get('refresh_token')?true:false;
-	 return value;
+    try{
+	    let value=cookies.get('access_token') ||cookies.get('refresh_token')?true:false;
+	    return value;
+    }catch(e){
+        console.log(e);
+    }
+
 
 }
 
 export const logout=()=>{
-	// console.log("Logout service");
+    try{
+	console.log("Logout service");
     cookies.remove('access_token');
     cookies.remove('refresh_token');
+    }catch(e){
+        console.log(e)
+    }
 }

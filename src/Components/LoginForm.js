@@ -1,54 +1,67 @@
-// import Button from 'react-bootstrap/Button';
-// import Form from 'react-bootstrap/Form';
 import React from 'react';
 import { useState } from 'react';
 import { Button, Form, Input } from "antd"
 import axios from '../utils/axios';
 import { setCookie,isAuth,logout } from '../utils/AuthenticationService';
 import { showSucessMessage,showErrorMessage } from '../utils/alerts';
+import Loading from '../utils/Loading';
 import Logout from './Logout';
-// add custom validations
+
 function LoginForm() {
     const [formValue, setFormValue] = useState({
         email: "",
         password: "",
         success: "",
-        error: ""
+        error: "",
+        isLoading:false
     })
-   
+
+    const mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
     const handleSubmit = async (e) => {
         try {
-        if(!formValue.email ||!formValue.password){   
-            setFormValue({...formValue,error:'Email or Password cannot be empty'})
+            e.preventDefault();
+            let {email,password}=formValue;
+            setFormValue({...formValue,isLoading:true})
+
+        if(!email ||!password ){  
+            console.log("Error"); 
+            setFormValue({...formValue,error:'Email or Password cannot be empty',success:'',isLoading:false})
+            return;
         }
+
+        if(!email.match(mailformat)){
+            setFormValue({...formValue,error:' Please enter a Valid Email',success:'',isLoading:false})
+            return;
+        }
+
+        else{
         console.log("handle submit");
+            const response = await axios({
+                method: "post",
+                url: "/access",
+                data: formValue,
+            })
 
-            
-                const response = await axios({
-                    method: "post",
-                    url: "/access",
-                    data: formValue,
+            if (response) {
+                setFormValue({
+                    email: "",
+                    password: "",
+                    success: "Login Sucessful",
+                    error: "",
+                    isLoading:false
                 })
-
-                if (response) {
-                    setFormValue({
-                        email: "",
-                        password: "",
-                        success: "Login Sucessful",
-                        error: "",
-                        isAuth: true,
-                    }) 
                     // console.log(response)
-                    setCookie(
-                        response.data.accessToken,
-                        response.data.refreshToken
-                    )
-                }
-        } catch (error) {
+            setCookie(
+                response.data.accessToken,
+                response.data.refreshToken
+            )}
+        }} catch (error) {
             setFormValue({
                 ...formValue,
                 error: error.response.data.error,
                 success: "",
+                isLoading:false
             })
         }
     }
@@ -59,42 +72,53 @@ function LoginForm() {
 
     const handleLogout = () => {
         logout()
-        setFormValue({ email: "", password: "", success: "Logout SucessFul", error: "" })
+        setFormValue({ email: "", password: "", success: "Logout Sucessful", error: "" })
     }
 
-    let { email, password, success, error } = formValue
+    let { email, password, success, error,isLoading } = formValue
     return (
         <>
             {success && showSucessMessage(success)}
             {error && showErrorMessage(error)}
+            {!isLoading ? (
+                isAuth() ? (
+                    <Logout handleLogout={handleLogout} />
+                ) : (
+                    <form onSubmit={handleSubmit}>
+                        <Form.Item
+                            label="Email"
+                            name="email"
+                            className="loginForm-email-custom"
+                        >
+                            <Input
+                                name="email"
+                                data-testid="email"
+                                value={email}
+                                onChange={handleChange}
+                            />
+                        </Form.Item>
 
-            {isAuth() ? (
-                <Logout handleLogout={handleLogout}/>
+                        <Form.Item label="Password" name="password">
+                            <Input.Password
+                                name="password"
+                                data-testid="password"
+                                value={password}
+                                onChange={handleChange}
+                            />
+                        </Form.Item>
+
+                        <Button
+                            className="loginForm-submit-custom"
+                            type="primary"
+                            data-testid="submit"
+                            htmlType="submit"
+                        >
+                            Submit
+                        </Button>
+                    </form>
+                )
             ) : (
-                <Form size='middle' 
-               
-                >
-                    <Form.Item
-                        label="Email"
-                        name="email"
-                        style={{marginLeft:'6%'}}
-                    >
-                        <Input name="email" data-testid="email"  value={email} onChange={handleChange} />
-                    </Form.Item>
-
-                    <Form.Item
-                   
-                        label="Password"
-                        name="password"
-                        
-                    >
-                        <Input.Password name="password"  data-testid="password"  value={password} onChange={handleChange} />
-                    </Form.Item>
-
-                    <Button onClick={handleSubmit}  style={{marginLeft:'20%'}} type="primary" data-testid='submit' htmlType="submit">
-                        Submit
-                    </Button>
-                </Form>
+                <Loading />
             )}
         </>
     )

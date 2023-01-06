@@ -6,18 +6,19 @@ import { Layout,Col,Row} from 'antd';
 const { Header, Content } = Layout;
 const FormLayout=()=>{
 
+    
     return (
         <Layout >
-            <Header style={{backgroundColor:'blue',textAlign:'center',color:'white',fontSize:'27px'}} >Zyax Login Form 'Add Form Validations'</Header>
-            <Content style={{ margin: '24px ',height:'100vh',width:'100%' }}>
+             <Header className='header-custom' >Zyax Login Form </Header>
+            <Content className='content-custom'>
             
             <Row jusify="center" align="middle">
-            {/* <Space > */}
+           
                 <Col span={7}/>
-                <Col span={8} >
+                <Col span={8} > 
                  <LoginForm />
                 </Col>
-                {/* </Space> */}
+               
             </Row>
             
             </Content>

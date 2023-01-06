@@ -1,11 +1,29 @@
-.main{
-border-radius: 5px;
-background-color: #EF5350;
-margin-top: 30px;
-padding-top: 20px;
-padding-bottom: 20px;
-padding-left: 15px;
-padding-right: 15px;
-margin-left: calc((100% - 580px) / 2);
-width: 550px
-};
+.content-custom{
+    margin: 24px 0px !important;
+    height:100vh !important;
+    width:100%  !important;
+}
+.header-custom{
+    background-color: royalblue !important;
+    text-align: center;
+    color: white !important;
+    font-size: 27px ;
+}
+.alert-custom{
+    margin: 10px 0px;
+    padding: 15px;
+    font-size: 20px;
+    font-weight: 600;
+}
+.loginForm-email-custom{
+    margin-left: 6% !important; 
+}
+.loginForm-submit-custom{
+    margin-left: 18% !important;
+}
+.logout-main-div{
+    margin:10px;
+}
+.loginform-loader-custom{
+    margin-left: 54%;
+}
